@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Resource_M.h"
+#include "Kismet/GameplayStatics.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -49,4 +51,60 @@ public:
 	// Player camera component
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* PlayerCamComp;
+
+	// Player health
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+		float Health = 100.0f;
+
+	// Player Hunger
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+		float Hunger = 100.0f;
+
+	// Player Stamina
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+		float Stamina = 100.0f;
+
+	// Owned wood
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Wood;
+
+	// Owned stone
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Stone;
+
+	// Owned berry
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		int Berry;
+
+	// Array of integers for owned resources
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+		TArray<int> ResourcesArray;
+
+	// Array of names for owned resources
+	UPROPERTY(EditAnywhere, Category = "Resources")
+		TArray<FString> ResourcesNameArray;
+
+	// Decal for hit feedback
+	UPROPERTY(EditAnywhere, Category = "HitMarker")
+		UMaterialInterface* hitDecal;
+
+	// Set player health
+	UFUNCTION(BlueprintCallable)
+		void SetHealth(float amount);
+
+	// Set player hunger
+	UFUNCTION(BlueprintCallable)
+		void SetHunger(float amount);
+
+	// Set player stamina
+	UFUNCTION(BlueprintCallable)
+		void SetStamina(float amount);
+
+	// Decrease player stats
+	UFUNCTION(BlueprintCallable)
+		void DecreaseStats();
+
+	// Give resource to player
+	UFUNCTION()
+		void GiveResource(float amount, FString resourceType);
 };
