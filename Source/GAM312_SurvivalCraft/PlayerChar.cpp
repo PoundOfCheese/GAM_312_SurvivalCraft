@@ -32,6 +32,12 @@ void APlayerChar::BeginPlay()
 	FTimerHandle StatsTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
 	
+	// Set the initial objective values to 0
+	if (objWidget)
+	{
+		objWidget->UpdateBuildObj(0.0f);
+		objWidget->UpdateMatObj(0.0f);
+	}
 }
 
 // Called every frame
@@ -96,6 +102,7 @@ void APlayerChar::StopJump()
 	bPressedJump = false;
 }
 
+// Handle interacting with resource node
 void APlayerChar::FindObject()
 {
 	// Setup HitResult for line trace
@@ -131,6 +138,10 @@ void APlayerChar::FindObject()
 					// Give resourceAmount to player
 					GiveResource(resourceValue, hitName);
 
+					// Update mats objective
+					matsCollected = matsCollected + resourceValue;
+					objWidget->UpdateMatObj(matsCollected);
+
 					check(GEngine != nullptr);
 					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
 
@@ -161,6 +172,10 @@ void APlayerChar::FindObject()
 	else
 	{
 		isBuilding = false;
+
+		// Increment objects built objective
+		objectsBuilt = objectsBuilt + 1.0f;
+		objWidget->UpdateBuildObj(objectsBuilt);
 	}
 }
 
