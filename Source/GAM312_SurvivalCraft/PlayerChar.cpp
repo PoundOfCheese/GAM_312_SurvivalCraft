@@ -142,9 +142,6 @@ void APlayerChar::FindObject()
 					matsCollected = matsCollected + resourceValue;
 					objWidget->UpdateMatObj(matsCollected);
 
-					check(GEngine != nullptr);
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Collected"));
-
 					// Spawn hitDecal
 					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f, 10.0f, 10.0f), HitResult.Location, FRotator(-90, 0, 0), 2.0f);
 
@@ -154,15 +151,10 @@ void APlayerChar::FindObject()
 					// Remove resourceAmount from totalResource of the resource node
 					HitResource->totalResource = HitResource->totalResource - resourceValue;
 
-					int totalResource = HitResource->totalResource;
-					GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Total Resource: %i"), totalResource));
-
 					// If there is nothing left in the resource node
 					if (HitResource->totalResource < resourceValue)
 					{
 						HitResource->Destroy();
-						check(GEngine != nullptr);
-						GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Resource Depleted"));
 					}
 				}
 			}
