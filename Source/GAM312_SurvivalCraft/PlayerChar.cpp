@@ -186,6 +186,10 @@ void APlayerChar::SetHealth(float amount)
 	{
 		Health = Health + amount;
 	}
+	else
+	{
+		Health = 100;
+	}
 }
 
 // Set player hunger
@@ -195,6 +199,10 @@ void APlayerChar::SetHunger(float amount)
 	{
 		Hunger = Hunger + amount;
 	}
+	else
+	{
+		Hunger = 100;
+	}
 }
 
 // Set player stamina
@@ -203,6 +211,10 @@ void APlayerChar::SetStamina(float amount)
 	if (Stamina + amount <= 100)
 	{
 		Stamina = Stamina + amount;
+	}
+	else
+	{
+		Stamina = 100;
 	}
 }
 
@@ -223,11 +235,6 @@ void APlayerChar::DecreaseStats()
 	{
 		SetHealth(-3.0f);
 	}
-
-	check(GEngine != nullptr);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Health: %.1f"), Health));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Hunger: %.1f"), Hunger));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Stamina: %.1f"), Stamina));
 
 }
 
